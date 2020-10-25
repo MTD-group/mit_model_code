@@ -3,33 +3,33 @@ This repository contains the code and data used in constructing the temperature-
 binary classifiers: a Metal vs. non-Metal model, an Insulator vs. non-Insulator model and an MIT vs. non-MIT model.
 
 # Table of Content
-- [Model Description](https://github.com/rpw199912j/mit_model_code#model-description)
-  * [Research Question](https://github.com/rpw199912j/mit_model_code#research-question)
-  * [Training Algorithm](https://github.com/rpw199912j/mit_model_code#training-algorithm)
-  * [A Word of Caution](https://github.com/rpw199912j/mit_model_code#a-word-of-caution)
-- [General Workflow](https://github.com/rpw199912j/mit_model_code#general-workflow)
-  * [1. Data Preparation](https://github.com/rpw199912j/mit_model_code#1-data-preparation)
-    + [1.1 Getting CIF files](https://github.com/rpw199912j/mit_model_code#11-getting-cif-files)
-    + [1.2 Generate ionization lookup dataframe](https://github.com/rpw199912j/mit_model_code#12-generate-ionization-lookup-dataframe)
-    + [1.3 Generate features using the cif files](https://github.com/rpw199912j/mit_model_code#13-generate-features-using-the-cif-files)
-    + [1.4 Clean up the data](https://github.com/rpw199912j/mit_model_code#14-clean-up-the-data)
-  * [2. Model Building](https://github.com/rpw199912j/mit_model_code#2-model-building)
-    + [2.1 Tune the XGBoost model](https://github.com/rpw199912j/mit_model_code#21-tune-the-xgboost-model)
-    + [2.2 Evaluate performance and save models](https://github.com/rpw199912j/mit_model_code#22-evaluate-performance-and-save-models)
-    + [2.3 Select important features and iterate](https://github.com/rpw199912j/mit_model_code#23-select-important-features-and-iterate)
-  * [3. Deploy & Serve Models](https://github.com/rpw199912j/mit_model_code#3-deploy--serve-models)
-- [Demo Notebooks](https://github.com/rpw199912j/mit_model_code#demo-notebooks)
-  * [generate_compound_features.ipynb](https://github.com/rpw199912j/mit_model_code#generate_compound_featuresipynb)
-  * [generate_lookup_table.ipynb](https://github.com/rpw199912j/mit_model_code#generate_lookup_tableipynb)
-  * [EDA_and_data_cleaning.ipynb](https://github.com/rpw199912j/mit_model_code#EDA_and_data_cleaningipynb)
-  * [model_building_and_eval.ipynb](https://github.com/rpw199912j/mit_model_code#model_building_and_evalipynb)
-  * [pipeline_demo.ipynb (**Make a prediction right in your web browser!**)](https://github.com/rpw199912j/mit_model_code#pipeline_demoipynb)
-  * [Supporting notebooks](https://github.com/rpw199912j/mit_model_code#supporting-notebooks)
-    + [model_comparison.ipynb](https://github.com/rpw199912j/mit_model_code#model_comparisonipynb)
-    + [shap_analysis.ipynb](https://github.com/rpw199912j/mit_model_code#shap_analysisipynb)
-    + [test_featurizer_sub_functions.ipynb](https://github.com/rpw199912j/mit_model_code#test_featurizer_sub_functionsipynb)
-    + [handbuilt_featurizer_benchmark.ipynb](https://github.com/rpw199912j/mit_model_code#handbuilt_featurizer_benchmarkipynb)
-    + [dataset_visualization.ipynb](https://github.com/rpw199912j/mit_model_code#dataset_visualizationipynb)
+- [Model Description](#model-description)
+  * [Research Question](#research-question)
+  * [Training Algorithm](#training-algorithm)
+  * [A Word of Caution](#a-word-of-caution)
+- [General Workflow](#general-workflow)
+  * [1. Data Preparation](#1-data-preparation)
+    + [1.1 Getting CIF files](#11-getting-cif-files)
+    + [1.2 Generate ionization lookup dataframe](#12-generate-ionization-lookup-dataframe)
+    + [1.3 Generate features using the cif files](#13-generate-features-using-the-cif-files)
+    + [1.4 Clean up the data](#14-clean-up-the-data)
+  * [2. Model Building](#2-model-building)
+    + [2.1 Tune the XGBoost model](#21-tune-the-xgboost-model)
+    + [2.2 Evaluate performance and save models](#22-evaluate-performance-and-save-models)
+    + [2.3 Select important features and iterate](#23-select-important-features-and-iterate)
+  * [3. Deploy & Serve Models](#3-deploy--serve-models)
+- [Demo Notebooks](#demo-notebooks)
+  * [generate_lookup_table.ipynb](#generate_lookup_tableipynb)
+  * [generate_compound_features.ipynb](#generate_compound_featuresipynb)
+  * [EDA_and_data_cleaning.ipynb](#EDA_and_data_cleaningipynb)
+  * [model_building_and_eval.ipynb](#model_building_and_evalipynb)
+  * [pipeline_demo.ipynb (**Make a prediction right in your web browser!**)](#pipeline_demoipynb)
+  * [Supporting notebooks](#supporting-notebooks)
+    + [model_comparison.ipynb](#model_comparisonipynb)
+    + [shap_analysis.ipynb](#shap_analysisipynb)
+    + [test_featurizer_sub_functions.ipynb](#test_featurizer_sub_functionsipynb)
+    + [handbuilt_featurizer_benchmark.ipynb](#handbuilt_featurizer_benchmarkipynb)
+    + [dataset_visualization.ipynb](#dataset_visualizationipynb)
 
 # Model Description
 ## Research Question
@@ -40,7 +40,7 @@ transition behavior based on a series of compositional and structural descriptor
 The training algorithm or the model type chosen for this task is an [XGBoost](https://xgboost.readthedocs.io/en/latest/) 
 tree classifier implemented in the Python programming language. XGBoost models have helped won numerous 
 Kaggle competitions and have been shown to perform well on classification tasks. For this research project, if you wonder why we chose XGBoost over other
-model types and why binary classification over multi-class classification, you can refer to [this section](https://github.com/rpw199912j/mit_model_code#model_comparisonipynb). The takeaway is that XGBoost is consistently among the best performing model types
+model types and why binary classification over multi-class classification, you can refer to [this section](#model_comparisonipynb). The takeaway is that XGBoost is consistently among the best performing model types
 and that it is faster to train compared to other models with comparable performance. The performance across all model types on binary classifications is also
 better than that on multi-class classifications.
 
@@ -67,7 +67,7 @@ high-quality experimental structures files from the ICSD database, with a few fr
 Project databases.
 
 **Note**: Unfortunately, we can not directly share the collected CIF files due to copyright concerns. However, you can find the material ID of the 
-compounds included in our dataset [here](https://github.com/rpw199912j/mit_model_code/blob/master/data/processed/csv_version/IMT_Classification_Dataset_Full_Feature_Set_v9.csv) 
+compounds included in our dataset [here](data/processed/csv_version/IMT_Classification_Dataset_Full_Feature_Set_v9.csv) 
 (you should look at the `struct_file_path` column to find the IDs). Should you have access, you can use those IDs 
 to download CIF files from ICSD, Springer and Materials Project. 
 You will find 4 suffixes in `struct_file_path` which correspond to 4 sources as follows.
@@ -101,7 +101,7 @@ zero-variance (i.e. the feature value is the same for all compounds) and high li
     - Drop one of the two features in each pair of highly correlated features
 
 After data cleaning, the dataset now has 103 (102 numeric & 1 one-hot-encoded categorical with 2 levels) features 
-remaining and will be referred to as [the full feature](https://github.com/rpw199912j/mit_model_code/blob/master/data/processed/csv_version/IMT_Classification_Dataset_Full_Feature_Set_v9.csv) set from now on.
+remaining and will be referred to as [the full feature](data/processed/csv_version/IMT_Classification_Dataset_Full_Feature_Set_v9.csv) set from now on.
 
 ## 2. Model Building
 The model building process follows an iterative approach. During the first iteration, the cleaned-up full feature set is fed into
@@ -145,7 +145,7 @@ After model evaluation, the models are trained on the entire dataset (228 compou
 
 ### 2.3 Select important features and iterate
 Using the stored models, a SHAP analysis is carried out to find the most important features. These important features are further screened
-using domain knowledge. Currently, 10 features are selected to create a [reduced feature set](https://github.com/rpw199912j/mit_model_code/blob/master/data/processed/csv_version/IMT_Classification_Dataset_Reduced_Feature_Set_v9.csv). 
+using domain knowledge. Currently, 10 features are selected to create a [reduced feature set](data/processed/csv_version/IMT_Classification_Dataset_Reduced_Feature_Set_v9.csv). 
 This feature selection step mainly serves to prevent overfitting.
 
 With this reduced feature set, the entire model building process is repeated and the models are re-tuned, re-evaluated and 
@@ -161,7 +161,7 @@ The models served on the Binder server are by default based on the reduced featu
 # Demo Notebooks
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/)
 
-There are several [Jupyter notebooks](https://github.com/rpw199912j/mit_model_code/tree/master/notebooks) 
+There are several [Jupyter notebooks](notebooks) 
 available for easier result replication and demonstration purposes. You can immediately launch interactive versions of these
 notebooks in your web browser by clicking on the binder icon above or clicking on the subsection titles below.
 
@@ -175,7 +175,6 @@ This notebook generates the ionization energy lookup spreadsheet.
 ## [generate_compound_features.ipynb](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/generate_compound_features.ipynb)
 This notebook allows you to generate features for all the structures. As mentioned before, since we cannot share the structure files, 
 running this notebook will not work due to the absence of CIF files.
-
 
 ## [EDA_and_data_cleaning.ipynb](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/EDA_and_data_cleaning.ipynb)
 This notebook presents an exploratory data analysis along with a data cleaning process on the output dataset from _generate_compound_features.ipynb_.
@@ -214,22 +213,22 @@ The 4 classification tasks are:
 3. MIT vs. non-MIT (Metals + Insulators)
 4. Multi-class classification
 
-The metrics and evaluation method are the same as the [process](https://github.com/rpw199912j/mit_model_code#22-evaluate-performance-and-save-models) mentioned earlier. The comparison results are summarized in [this table](https://github.com/rpw199912j/mit_model_code/blob/master/data/processed/csv_version/model_metrics_comparison_with_raw.csv).
-A [summary plot](https://github.com/rpw199912j/mit_model_code/blob/master/plots/model_comparison_boxplot.pdf) is also provided for easier interpretation.
+The metrics and evaluation method are the same as the [process](#22-evaluate-performance-and-save-models) mentioned earlier. The comparison results are summarized in [this table](https://github.com/rpw199912j/mit_model_code/blob/master/data/processed/csv_version/model_metrics_comparison_with_raw.csv).
+A [summary plot](plots/model_comparison_boxplot.pdf) is also provided for easier interpretation.
 
 ### [shap_analysis.ipynb](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/shap_analysis.ipynb)
 This notebook presents a brief SHAP analysis on models trained with the reduced feature set.
 
 ### [test_featurizer_sub_functions.ipynb](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/test_featurizer_sub_functions.ipynb)
 This is a brief [tutorial 
-notebook](https://github.com/rpw199912j/mit_model_code/blob/master/notebooks/test_featurizer_sub_functions.ipynb)
+notebook](notebooks/test_featurizer_sub_functions.ipynb)
 that explains some of the sub-functions in the 
-[compound_featurizer.py](https://github.com/rpw199912j/mit_model_code/blob/master/data/compound_featurizer.py)
+[compound_featurizer.py](data/compound_featurizer.py)
 file.
 
 ### [handbuilt_featurizer_benchmark.ipynb](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/handbuilt_featurizer_benchmark.ipynb)
 This notebooks provides a benchmark of how "good" the handbuilt featurizer is against values from 
-[Table 2 & 3](https://github.com/rpw199912j/mit_model_code/blob/master/data/torrance_tables/torrance_tabulated.xlsx) 
+[Table 2 & 3](data/torrance_tables/torrance_tabulated.xlsx) 
 of [Torrance et al](https://www.sciencedirect.com/science/article/abs/pii/0921453491905346).
 
 ### [dataset_visualization.ipynb](https://mybinder.org/v2/gh/rpw199912j/mit_model_code/master?urlpath=lab/tree/notebooks/dataset_visualization.ipynb)
