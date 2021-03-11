@@ -8,17 +8,6 @@ from sklearn.metrics import auc, plot_roc_curve, plot_precision_recall_curve
 from sklearn.utils.class_weight import compute_sample_weight
 from sklearn.model_selection import cross_validate, StratifiedKFold, GridSearchCV
 
-# # set up constants
-# PROCESSED_PATH = "../data/processed/IMT_Classification_Dataset_Processed_v4.xlsx"
-# TRAIN_RANDOM_SEED = 31415926
-# SCORING_METRICS = ["precision_weighted", "recall_weighted", "roc_auc", "f1_weighted"]
-# EVAL_RANDOM_SEEDS = np.arange(0, 10)
-# NUM_FOLDS = 5
-# SAVE_FIG_PATH = "../plots/"
-#
-# # read in the processed data
-# df = pd.read_excel(PROCESSED_PATH)
-
 
 def load_data(df_input, choice="Multiclass"):
     """
@@ -116,11 +105,6 @@ def tune_hyperparam(df_input, class_of_choice, seed, model=xgb.XGBClassifier, nu
     tune_grid.fit(X_features, y_labels, sample_weight=sample_weights)
 
     return tune_grid.best_params_
-
-
-# best_params = {choice: tune_hyperparam(df, choice, TRAIN_RANDOM_SEED)
-#                for choice in ["Metal", "Insulator", "MIT"]}
-# print(best_params)
 
 
 # %% evaluate model performance with multiple metrics using the sklearn API
@@ -280,12 +264,6 @@ def return_metric_print(eval_method, eval_metric, all_metric_lst):
         raise Exception('Invalid eval_method. Use "robust" or "standard"')
 
 
-# %%
-# for choice in ["Metal", "Insulator", "MIT"]:
-#     eval_model(EVAL_RANDOM_SEEDS, SCORING_METRICS, choice, df_input=df, params=best_params, method="robust",
-#                num_folds=NUM_FOLDS)
-
-
 # %% define a function to plot roc or precision_recall curves
 def plot_eval(df_input, tuned_params, eval_seeds, num_folds=10, eval_method="roc", fontsize=24,
               individual_alpha=0.0, stat_func=np.median):
@@ -392,8 +370,8 @@ def plot_eval(df_input, tuned_params, eval_seeds, num_folds=10, eval_method="roc
         ax[index].tick_params(axis='both', which='major', labelsize=fontsize)
 
     if eval_method == "roc":
-        x_axis_label = "False Positive Rate"
-        y_axis_label = "True Positive Rate"
+        x_axis_label = "False positive rate"
+        y_axis_label = "True positive rate"
     elif eval_method == "pr":
         x_axis_label = "Recall"
         y_axis_label = "Precision"
@@ -403,16 +381,3 @@ def plot_eval(df_input, tuned_params, eval_seeds, num_folds=10, eval_method="roc
     plt.show()
 
     return fig
-
-
-# roc_curve = plot_eval(df, best_params, eval_seeds=EVAL_RANDOM_SEEDS, num_folds=NUM_FOLDS)
-# roc_curve.savefig(SAVE_FIG_PATH + "roc_curve_10_seeds.pdf", dpi=300)
-#
-# # %%
-# pr_curve = plot_eval(df, best_params, eval_seeds=EVAL_RANDOM_SEEDS, num_folds=NUM_FOLDS, eval_method="pr")
-# pr_curve.savefig(SAVE_FIG_PATH + "pr_curve_10_seeds.pdf", dpi=300)
-#
-# # %%
-# plot_eval(df, best_params, eval_seeds=[TRAIN_RANDOM_SEED], num_folds=NUM_FOLDS, stat_func=np.median,
-#           individual_alpha=0.5)
-
